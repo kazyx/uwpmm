@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,22 +27,30 @@ namespace Kazyx.Uwpmm.Utility
 
         public Action<ImageFetchError> Failed;
 
-        protected void OnFetched(StorageFile file)
+        private PictureDownloader() { }
+
+        protected async void OnFetched(StorageFile file)
         {
             DebugUtil.Log("PictureSyncManager: OnFetched");
-            if (Fetched != null)
+            await SystemUtil.GetCurrentDispatcher().RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Fetched(file);
-            }
+                if (Fetched != null)
+                {
+                    Fetched(file);
+                }
+            });
         }
 
-        protected void OnFailed(ImageFetchError error)
+        protected async void OnFailed(ImageFetchError error)
         {
             DebugUtil.Log("PictureSyncManager: OnFailed" + error);
-            if (Failed != null)
+            await SystemUtil.GetCurrentDispatcher().RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Failed(error);
-            }
+                if (Failed != null)
+                {
+                    Failed(error);
+                }
+            });
         }
 
         public async void Enqueue(Uri uri)
@@ -112,12 +119,9 @@ namespace Kazyx.Uwpmm.Utility
                 {
                     var library = KnownFolders.PicturesLibrary;
                     StorageFolder folder = null;
-                    folder = await library.GetFolderAsync(DIRECTORY_NAME);
-                    if (folder == null)
-                    {
-                        DebugUtil.Log("Create folder: " + DIRECTORY_NAME);
-                        folder = await library.CreateFolderAsync(DIRECTORY_NAME);
-                    }
+                    DebugUtil.Log("Create folder: " + DIRECTORY_NAME);
+
+                    folder = await library.CreateFolderAsync(DIRECTORY_NAME, CreationCollisionOption.OpenIfExists);
 
                     var filename = string.Format(DIRECTORY_NAME + "_{0:yyyyMMdd_HHmmss}.jpg", DateTime.Now);
                     DebugUtil.Log("Create file: " + filename);
