@@ -27,6 +27,8 @@ namespace Kazyx.Uwpmm.Utility
 
         public Action<ImageFetchError> Failed;
 
+        private PictureDownloader() { }
+
         protected async void OnFetched(StorageFile file)
         {
             DebugUtil.Log("PictureSyncManager: OnFetched");
