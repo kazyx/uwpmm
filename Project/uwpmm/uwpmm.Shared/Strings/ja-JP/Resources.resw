@@ -1091,4 +1091,13 @@ PlayMemories Camera Appsストアで最新版にアップデートしてくだ�
   <data name="ContentTypesGuide" xml:space="preserve">
     <value>グリッドに表示するコンテンツの種類</value>
   </data>
+  <data name="SettingSection_System" xml:space="preserve">
+    <value>システム設定</value>
+  </data>
+  <data name="Setting_PreventFromSleep" xml:space="preserve">
+    <value>画面のスリープを防ぐ</value>
+  </data>
+  <data name="Setting_PreventFromSleep_guide" xml:space="preserve">
+    <value>インターバル撮影の際には有効にすることをお勧めします。</value>
+  </data>
 </root>

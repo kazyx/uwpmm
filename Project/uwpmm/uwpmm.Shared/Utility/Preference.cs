@@ -20,6 +20,7 @@ namespace Kazyx.Uwpmm.Utility
         private const string request_focus_frame_info = "request_focus_frame_info";
         private const string prioritize_original_contents = "prioritize_original_contents";
         private const string remote_contents_set = "remote_contents_set";
+        private const string prevent_from_sleep = "prevent_from_sleep";
 
         private const string init_launched_datetime = "init_datetime";
 
@@ -124,6 +125,12 @@ namespace Kazyx.Uwpmm.Utility
         {
             get { return (ContentsSet)GetProperty(remote_contents_set, (int)ContentsSet.ImagesAndMovies); }
             set { SetProperty(remote_contents_set, (int)value); }
+        }
+
+        public static bool PreventFromSleep
+        {
+            get { return GetProperty(prevent_from_sleep, true); }
+            set { SetProperty(prevent_from_sleep, value); }
         }
     }
 }

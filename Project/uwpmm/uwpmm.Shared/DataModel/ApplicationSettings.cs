@@ -1,6 +1,7 @@
 ﻿using Kazyx.Uwpmm.Control;
 using Kazyx.Uwpmm.Playback;
 using Kazyx.Uwpmm.Utility;
+using Windows.System.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -24,6 +25,7 @@ namespace Kazyx.Uwpmm.DataModel
             RequestFocusFrameInfo = Preference.FocusFrameEnabled;
             PrioritizeOriginalSizeContents = Preference.OriginalSizeContentsPrioritized;
             RemoteContentsSet = Preference.RemoteContentsSet;
+            PreventFromSleep = Preference.PreventFromSleep;
         }
 
         public static ApplicationSettings GetInstance()
@@ -294,6 +296,31 @@ namespace Kazyx.Uwpmm.DataModel
                     Preference.RemoteContentsSet = value;
                     _RemoteContentsType = value;
                     NotifyChangedOnUI("RemoteContentsSet");
+                }
+            }
+        }
+
+        private readonly DisplayRequest displayRequest = new DisplayRequest();
+
+        private bool _PreventFromSleep = false;
+        public bool PreventFromSleep
+        {
+            get { return _PreventFromSleep; }
+            set
+            {
+                if (value != _PreventFromSleep)
+                {
+                    Preference.PreventFromSleep = value;
+                    _PreventFromSleep = value;
+                    if (value)
+                    {
+                        displayRequest.RequestActive();
+                    }
+                    else
+                    {
+                        displayRequest.RequestRelease();
+                    }
+                    NotifyChangedOnUI("PreventFromSleep");
                 }
             }
         }

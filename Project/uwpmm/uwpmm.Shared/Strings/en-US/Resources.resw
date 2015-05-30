@@ -1169,4 +1169,13 @@ Open gallary to browse contents in your camera device.</value>
   <data name="ContentsSet_PictureMovie" xml:space="preserve">
     <value>Pictures and Movies</value>
   </data>
+  <data name="SettingSection_System" xml:space="preserve">
+    <value>System settings</value>
+  </data>
+  <data name="Setting_PreventFromSleep" xml:space="preserve">
+    <value>Keep screen on</value>
+  </data>
+  <data name="Setting_PreventFromSleep_guide" xml:space="preserve">
+    <value>Recommended to check for interval shooting.</value>
+  </data>
 </root>
