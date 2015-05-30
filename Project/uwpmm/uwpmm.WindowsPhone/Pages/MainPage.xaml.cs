@@ -26,6 +26,7 @@ using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.System;
+using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -1580,6 +1581,14 @@ namespace Kazyx.Uwpmm.Pages
                 },
                 SettingValueConverter.FromFibonacciLineOrigin(EnumUtil<FibonacciLineOrigins>.GetValueEnumerable()));
             display_settings.Add(new ComboBoxSetting(fibonacciOriginSetting));
+
+            var system_settings = new SettingSection(SystemUtil.GetStringResource("SettingSection_System"));
+            AppSettings.Children.Add(system_settings);
+
+            system_settings.Add(new ToggleSetting(
+                new AppSettingData<bool>(SystemUtil.GetStringResource("Setting_PreventFromSleep"), SystemUtil.GetStringResource("Setting_PreventFromSleep_guide"),
+                () => { return ApplicationSettings.GetInstance().PreventFromSleep; },
+                enabled => { ApplicationSettings.GetInstance().PreventFromSleep = enabled; })));
 
             HideSettingAnimation.Completed += HideSettingAnimation_Completed;
         }
